@@ -3,10 +3,6 @@ FROM node:14-buster AS builder
 ENV APP_DIR=/app
 WORKDIR "$APP_DIR"
 
-RUN apt-get update && apt-get install -y \
-  hplip hplip-data hpijs-ppds libsane-hpaio printer-driver-hpcups printer-driver-hpijs \
-  && rm -rf /var/lib/apt/lists/*
-
 COPY package*.json "$APP_DIR/"
 COPY packages/server/package*.json "$APP_DIR/packages/server/"
 COPY packages/client/package*.json "$APP_DIR/packages/client/"
@@ -47,6 +43,10 @@ RUN apt-get update \
     's/policy domain="coder" rights="none" pattern="PDF"/policy domain="coder" rights="read | write" pattern="PDF"'/ \
     /etc/ImageMagick-6/policy.xml \
   && npm install -g npm@7.11.2
+
+RUN apt-get update && apt-get install -y \
+  hplip hplip-data hpijs-ppds libsane-hpaio printer-driver-hpcups printer-driver-hpijs \
+  && rm -rf /var/lib/apt/lists/*
 
 # Create a known user
 RUN groupadd -g $GID -o $UNAME
