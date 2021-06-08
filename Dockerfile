@@ -3,7 +3,9 @@ FROM node:14-buster AS builder
 ENV APP_DIR=/app
 WORKDIR "$APP_DIR"
 
-RUN apk add hplip
+RUN apt-get update && apt-get install -y \
+  hplip \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json "$APP_DIR/"
 COPY packages/server/package*.json "$APP_DIR/packages/server/"
