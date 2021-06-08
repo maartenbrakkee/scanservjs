@@ -3,6 +3,8 @@ FROM node:14-buster AS builder
 ENV APP_DIR=/app
 WORKDIR "$APP_DIR"
 
+RUN apk add hplip
+
 COPY package*.json "$APP_DIR/"
 COPY packages/server/package*.json "$APP_DIR/packages/server/"
 COPY packages/client/package*.json "$APP_DIR/packages/client/"
