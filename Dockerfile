@@ -4,7 +4,7 @@ ENV APP_DIR=/app
 WORKDIR "$APP_DIR"
 
 RUN apt-get update && apt-get install -y \
-  hplip \
+  hplip hplip-data hpijs-ppds libsane-hpaio printer-driver-hpcups printer-driver-hpijs \
   && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json "$APP_DIR/"
